@@ -29,7 +29,7 @@ This repository provides a complete **step-by-step guide** to build a production
 
 ---
 
-## Installation Steps
+## Installation Steps - For Control Plane
 
 ### 1. System Setup
 
@@ -115,3 +115,41 @@ OR
 kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/manifests/calico.yaml
 ```
 
+YOUR CONTROL PLANE IS READY - Now you need to initialize the Worker Nodes and join them with the Control Plane to form a Cluster
+
+---
+
+## Installation Steps for Worker Nodes
+
+### 1. Prepare the System
+
+```bash
+# Set hostname
+sudo hostnamectl set-hostname w1   # change to w2, w3, etc.
+```
+
+```bash
+# Disable swap
+sudo swapoff -a
+sudo sed -i '/ swap / s/^/#/' /etc/fstab
+```
+
+```bash
+# Load kernel modules
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+overlay
+br_netfilter
+EOF
+sudo modprobe overlay
+sudo modprobe br_netfilter
+```
+
+```bash
+# Sysctl settings for Kubernetes networking
+cat <<EOF | sudo tee /etc/sysctl.d/99-kubernetes-cri.conf
+net.bridge.bridge-nf-call-iptables = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.ipv4.ip_forward = 1
+EOF
+sudo sysctl --system
+```
