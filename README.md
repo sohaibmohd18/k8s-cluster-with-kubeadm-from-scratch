@@ -31,7 +31,7 @@ This repository provides a complete **step-by-step guide** to build a production
 
 ## ⚙️ Installation Steps
 
-### 1️⃣ System Setup
+### 1. System Setup
 
 ```bash
 sudo hostnamectl set-hostname cp1   # Adjust per node
@@ -51,4 +51,15 @@ net.bridge.bridge-nf-call-iptables = 1
 net.ipv4.ip_forward = 1
 EOF
 sudo sysctl --system
+```
+
+### 2. Install containerd
+
+```bash
+sudo apt-get update
+sudo apt-get install -y containerd
+sudo mkdir -p /etc/containerd
+containerd config default | sudo tee /etc/containerd/config.toml >/dev/null
+sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+sudo systemctl enable --now containerd
 ```
