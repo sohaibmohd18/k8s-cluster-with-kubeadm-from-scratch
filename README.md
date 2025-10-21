@@ -200,3 +200,32 @@ sudo systemctl enable --now kubelet
 
 REPEAT Step 1 - Step 3 IN ALL YOUR WORKER NODES
 
+---
+
+## Join Your Cluster
+
+From your control-plane node, run this to get the join command:
+```bash
+kubeadm token create --print-join-command
+```
+
+You'll get something like:
+```bash
+kubeadm join 10.0.0.10:6443 --token abcd12.34efgh5678ijklmn \
+    --discovery-token-ca-cert-hash sha256:1a2b3c4d5e6f7g8h9i0j...
+```
+
+Now run that entire command in each of your Worker Nodes
+
+```bash
+sudo kubeadm join 10.0.0.10:6443 \
+  --token abcd12.34efgh5678ijklmn \
+  --discovery-token-ca-cert-hash sha256:1a2b3c4d5e6f7g8h9i0j...
+```
+
+If joined, you'll see something like shown below
+
+```bash
+This node has joined the cluster!
+```
+
