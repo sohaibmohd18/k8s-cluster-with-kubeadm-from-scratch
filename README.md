@@ -229,3 +229,19 @@ If joined, you'll see something like shown below
 This node has joined the cluster!
 ```
 
+### Verify from Control Plane
+
+On your control plane
+
+```bash
+kubectl get nodes -o wide
+```
+
+You should see output like
+
+```bash
+NAME   STATUS   ROLES           AGE   VERSION
+cp1    Ready    control-plane   25m   v1.30.0
+w1     Ready    <none>          2m    v1.30.0
+w2     Ready    <none>          1m    v1.30.0
+```
