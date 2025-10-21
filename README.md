@@ -281,7 +281,7 @@ sudo ETCDCTL_API=3 etcdctl \
 ## Troubleshooting Tips
 
 ```bash
-**Problem**                                              **Fix**
+PROBLEM                                                    FIX
 The connection to the server localhost:8080 was refused    Ensure you’re running kubectl on control plane with proper kubeconfig (/etc/kubernetes/admin.conf)
 Worker not showing up                                      Check worker logs: sudo journalctl -u kubelet -f
 Token expired                                              Recreate token: kubeadm token create --print-join-command
