@@ -287,3 +287,9 @@ Worker not showing up                                      Check worker logs: su
 Token expired                                              Recreate token: kubeadm token create --print-join-command
 Network not ready                                          Check CNI pods: kubectl get pods -n kube-flannel or -n calico-
 ```
+
+
+# Author
+Sohaib Mohammed
+
+Building Scalable, Reliable and Robust Systems
