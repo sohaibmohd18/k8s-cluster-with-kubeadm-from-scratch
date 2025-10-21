@@ -153,3 +153,23 @@ net.ipv4.ip_forward = 1
 EOF
 sudo sysctl --system
 ```
+
+### 2. Install and Configure Containerd
+
+```bash
+sudo apt-get update
+sudo apt-get install -y containerd
+```
+
+```bash
+# Configure containerd to use systemd cgroups
+sudo mkdir -p /etc/containerd
+containerd config default | sudo tee /etc/containerd/config.toml >/dev/null
+sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+```
+
+```bash
+# Enable containerd
+sudo systemctl enable --now containerd
+```
+
