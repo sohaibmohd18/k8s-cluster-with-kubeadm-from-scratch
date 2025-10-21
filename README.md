@@ -245,3 +245,33 @@ cp1    Ready    control-plane   25m   v1.30.0
 w1     Ready    <none>          2m    v1.30.0
 w2     Ready    <none>          1m    v1.30.0
 ```
+
+
+YOUR CLUSTER IS READY NOW!!!
+
+---
+
+## Optional Addons
+
+Metrics Server
+```bash
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+```
+
+Ingress Controller
+```bash
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+```
+
+### etcd Backup
+
+```bash
+sudo ETCDCTL_API=3 etcdctl \
+  --endpoints=https://127.0.0.1:2379 \
+  --cacert=/etc/kubernetes/pki/etcd/ca.crt \
+  --cert=/etc/kubernetes/pki/etcd/server.crt \
+  --key=/etc/kubernetes/pki/etcd/server.key \
+  snapshot save /var/backups/etcd-$(date +%F).db
+```
+
+---
