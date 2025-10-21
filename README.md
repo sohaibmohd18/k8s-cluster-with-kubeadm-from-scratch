@@ -37,7 +37,9 @@ This repository provides a complete **step-by-step guide** to build a production
 sudo hostnamectl set-hostname cp1   # Adjust per node
 sudo swapoff -a
 sudo sed -i '/ swap / s/^/#/' /etc/fstab
+```
 
+```bash
 # Kernel modules and sysctl
 cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
 overlay
@@ -94,8 +96,22 @@ sudo kubeadm init \
 ```
 
 ```bash
+# Setup kubectl access
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+### 5. Deploy CNI (Networking)
+
+```bash
+# Flannel
+kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
+```
+OR
+
+```bash
+# Calico
+kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.0/manifests/calico.yaml
 ```
 
